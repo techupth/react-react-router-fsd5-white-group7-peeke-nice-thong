@@ -1,17 +1,21 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function HomePage() {
   const [products, setProducts] = useState([]);
   const [isError, setIsError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
 
+  const navigate = useNavigate();
+
   const getProducts = async () => {
     try {
       setIsError(false);
       setIsLoading(true);
-      const results = await axios("http://localhost:4001/products");
+      const results = await axios.get("http://localhost:4001/products");
       setProducts(results.data.data);
+      console.log(results.data);
       setIsLoading(false);
     } catch (error) {
       setIsError(true);
@@ -25,7 +29,13 @@ function HomePage() {
     <div>
       <div className="app-wrapper">
         <h1 className="app-title">Products</h1>
-        <button>Create Product</button>
+        <button
+          onClick={() => {
+            navigate("/product/create");
+          }}
+        >
+          Create Product
+        </button>
       </div>
       <div className="product-list">
         {products.map((product) => {
