@@ -3,19 +3,12 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function CreateProductForm() {
-  const [productData, setProductData] = useState({});
   const [name, setName] = useState();
   const [image, setImage] = useState();
   const [price, setPrice] = useState();
   const [description, setDescription] = useState();
 
   const navigate = useNavigate();
-
-  const handleSubmit = (event) => {
-    event.preventDefault;
-    sendData();
-    navigate("/");
-  };
 
   const sendData = async () => {
     await axios.post(`http://localhost:4001/products`, {
@@ -24,6 +17,12 @@ function CreateProductForm() {
       price: price,
       description: description,
     });
+    navigate("/");
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    sendData();
   };
 
   return (

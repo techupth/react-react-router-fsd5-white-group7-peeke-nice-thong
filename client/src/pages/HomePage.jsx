@@ -15,7 +15,6 @@ function HomePage() {
       setIsLoading(true);
       const results = await axios.get("http://localhost:4001/products");
       setProducts(results.data.data);
-      console.log(results.data);
       setIsLoading(false);
     } catch (error) {
       setIsError(true);
@@ -25,6 +24,7 @@ function HomePage() {
   useEffect(() => {
     getProducts();
   }, []);
+
   return (
     <div>
       <div className="app-wrapper">
@@ -54,8 +54,22 @@ function HomePage() {
                 <h2>Product price: {product.price}</h2>
                 <p>Product description: {product.description} </p>
                 <div className="product-actions">
-                  <button className="view-button">View</button>
-                  <button className="edit-button">Edit</button>
+                  <button
+                    className="view-button"
+                    onClick={() => {
+                      navigate(`product/view/${product.id}`);
+                    }}
+                  >
+                    View
+                  </button>
+                  <button
+                    className="edit-button"
+                    onClick={() => {
+                      navigate(`/product/edit/${product.id}`);
+                    }}
+                  >
+                    Edit
+                  </button>
                 </div>
               </div>
 
